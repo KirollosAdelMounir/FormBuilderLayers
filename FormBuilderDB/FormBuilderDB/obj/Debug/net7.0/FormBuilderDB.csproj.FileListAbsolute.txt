@@ -1,0 +1,14 @@
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\bin\Debug\net7.0\FormBuilderDB.deps.json
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\bin\Debug\net7.0\FormBuilderDB.runtimeconfig.json
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\bin\Debug\net7.0\FormBuilderDB.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\bin\Debug\net7.0\FormBuilderDB.pdb
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.csproj.AssemblyReference.cache
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.GeneratedMSBuildEditorConfig.editorconfig
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.AssemblyInfoInputs.cache
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.AssemblyInfo.cs
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.csproj.CoreCompileInputs.cache
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\refint\FormBuilderDB.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.pdb
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\FormBuilderDB.genruntimeconfig.cache
+E:\Eva Intern\FormBuilderLayers\FormBuilderDB\FormBuilderDB\obj\Debug\net7.0\ref\FormBuilderDB.dll
