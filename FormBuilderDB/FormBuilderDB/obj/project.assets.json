@@ -3468,11 +3468,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj",
+      "projectUniqueName": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj",
       "projectName": "FormBuilderDB",
-      "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj",
+      "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj",
       "packagesPath": "C:\\Users\\kokoe\\.nuget\\packages\\",
-      "outputPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\obj\\",
+      "outputPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

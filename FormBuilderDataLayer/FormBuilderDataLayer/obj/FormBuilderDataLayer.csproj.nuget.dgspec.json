@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj": {}
+    "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj": {}
   },
   "projects": {
-    "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj": {
+    "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
+        "projectUniqueName": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
         "projectName": "FormBuilderDataLayer",
-        "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
+        "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
         "packagesPath": "C:\\Users\\kokoe\\.nuget\\packages\\",
-        "outputPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\obj\\",
+        "outputPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
