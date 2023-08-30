@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FormBuilderDataLayer\FormBuilderDataLayer\FormBuilderDataLayer.csproj" />
+    <ProjectReference Include="..\FormBuilderDB\FormBuilderDB\FormBuilderDB.csproj" />
+    <ProjectReference Include="..\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer.csproj" />
+    <ProjectReference Include="..\FormBuilderServiceLayer\FormBuilderServiceLayer\FormBuilderServiceLayer.csproj" />
+  </ItemGroup>
+
+</Project>
