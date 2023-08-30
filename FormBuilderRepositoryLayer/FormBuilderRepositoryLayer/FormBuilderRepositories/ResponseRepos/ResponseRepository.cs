@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FormBuilderRepositoryLayer.FormBuilderRepositories.ResponseRepos
 {
-    internal class ResponseRepository : Repository<Response, FormBuilderContext>, IResponseRepository
+    public class ResponseRepository : Repository<Response, FormBuilderContext>, IResponseRepository
     {
         public ResponseRepository(FormBuilderContext d) : base(d)
         {

@@ -25,8 +25,7 @@ public partial class FormBuilderContext : DbContext
 
     public virtual DbSet<SubForm> SubForms { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=FormBuilder;Trusted_Connection=True;");
+    
 
    
 }
