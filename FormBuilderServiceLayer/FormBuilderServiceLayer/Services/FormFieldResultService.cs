@@ -34,8 +34,5 @@ namespace FormBuilderServiceLayer.Services
                 await _unitOfRepositories.formFieldResultRepository.AddAsync(formFieldResult);
             }
         }
-
-        
-
     }
 }

@@ -38,6 +38,8 @@ namespace FormBuilderAppLayer
             builder.Services.AddScoped<MainFormService>();
             builder.Services.AddScoped<ResponseService>();
             builder.Services.AddScoped<SubFormService>();
+            //AutoMapper
+            builder.Services.AddAutoMapper(typeof(Program));
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

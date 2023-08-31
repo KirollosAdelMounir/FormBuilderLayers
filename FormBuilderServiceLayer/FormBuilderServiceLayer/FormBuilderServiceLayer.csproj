@@ -12,8 +12,4 @@
     <ProjectReference Include="..\..\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>
