@@ -20,6 +20,16 @@ namespace FormBuilderAppLayer
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("*") // Replace with your Swagger UI's domain
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
             // Adding Database Context
             builder.Services.AddDbContext<FormBuilderContext>(options=>options.UseSqlServer(builder.Configuration.GetConnectionString("ConString")));
             //Adding Units of the program from each layer
@@ -53,6 +63,7 @@ namespace FormBuilderAppLayer
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseHttpsRedirection();
 

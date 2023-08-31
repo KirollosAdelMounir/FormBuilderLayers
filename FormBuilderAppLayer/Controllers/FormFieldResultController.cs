@@ -30,7 +30,7 @@ namespace FormBuilderAppLayer.Controllers
             }
             return BadRequest("Invalid Id");
         }
-
+        [HttpGet("GetAllResponses")]
         public IActionResult GetAll (int ResponseId)
         {
             List<FormFieldResult> results = unitOfServices.FormFieldResultService.GetFieldResults(ResponseId);

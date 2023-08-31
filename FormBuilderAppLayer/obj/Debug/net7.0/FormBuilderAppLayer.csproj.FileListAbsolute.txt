@@ -156,3 +156,5 @@ C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\obj\Debu
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\obj\Debug\net7.0\FormBuilderAppLayer.pdb
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\obj\Debug\net7.0\FormBuilderAppLayer.genruntimeconfig.cache
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\obj\Debug\net7.0\ref\FormBuilderAppLayer.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

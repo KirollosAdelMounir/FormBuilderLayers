@@ -5,6 +5,7 @@ namespace FormBuilderServiceLayer.DTOs
 {
     public class EditSubFormDTO
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int MainFormID { get; set; }
         [Range(1, 12)]

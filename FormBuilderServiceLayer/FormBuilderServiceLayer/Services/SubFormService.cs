@@ -24,9 +24,9 @@ namespace FormBuilderServiceLayer.Services
         {
             return _unitOfRepositories.subFormRepository.GetById(id);
         }
-        public List<SubForm> GetList() 
+        public List<SubForm> GetList(int mainformID) 
         {
-            return _unitOfRepositories.subFormRepository.GetAll();
+            return _unitOfRepositories.subFormRepository.GetAllForms(mainformID);
         }
         public async Task Delete(int id)
         {
