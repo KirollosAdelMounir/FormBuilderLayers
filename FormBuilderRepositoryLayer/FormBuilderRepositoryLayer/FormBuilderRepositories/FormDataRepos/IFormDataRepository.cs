@@ -10,6 +10,6 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos
 {
     public interface IFormDataRepository: IRepository<FormsDatum, FormBuilderContext>
     {
-        List<FormsDatum> FetchWithSubID(int subID);
+        Task<List<FormsDatum>> FetchWithSubID(int subID);
     }
 }

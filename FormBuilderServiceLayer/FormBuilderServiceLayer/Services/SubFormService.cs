@@ -1,52 +1,79 @@
 ﻿using FormBuilderDB.Models;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.SubFormRepos;
 using FormBuilderRepositoryLayer.UnitOfWork;
+using FormBuilderServiceLayer.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace FormBuilderServiceLayer.Services
 {
     public class SubFormService
     {
-        private readonly IUnitOfRepositories _unitOfRepositories;
-        public SubFormService(IUnitOfRepositories unitOfRepositories) { _unitOfRepositories = unitOfRepositories; }
-        public async Task Create(SubForm subForm) 
+        private readonly ISubFormRepository subFormRepository;
+        private readonly IMainFormRepository mainFormRepository;
+        private readonly IFormDataRepository formDataRepository;
+        private readonly IMapper mapper;
+        public SubFormService(ISubFormRepository subFormRepository, IMainFormRepository mainFormRepository,
+            IFormDataRepository formDataRepository, IMapper mapper) 
+        { 
+            this.subFormRepository = subFormRepository;
+            this.mainFormRepository = mainFormRepository;
+            this.formDataRepository = formDataRepository;
+            this.mapper = mapper;
+            var config = new MapperConfiguration(cfg =>
+            {
+                /*cfg.CreateMap<FormsDatum, CreateFormDataDTO>().ReverseMap();
+                cfg.CreateMap<FormsDatum, EditFormDataDTO>().ReverseMap();
+                cfg.CreateMap<FormFieldResult, CreateFormFieldResultDTO>().ReverseMap();*/
+                cfg.CreateMap<SubForm, CreateSubFormDTO>().ReverseMap();
+                cfg.CreateMap<SubForm, EditSubFormDTO>().ReverseMap();
+            });
+
+            this.mapper = config.CreateMapper();
+        }
+        public async Task Create(CreateSubFormDTO createSubFormDTO) 
         {
-            MainForm mainForm = _unitOfRepositories.mainFormRepository.GetById(subForm.MainFormId);
+            MainForm mainForm = await mainFormRepository.GetById(createSubFormDTO.MainFormId);
             if(mainForm != null && mainForm.IsDeleted ==false)
             {
-                await _unitOfRepositories.subFormRepository.AddAsync(subForm);
+                SubForm subForm = mapper.Map<SubForm>(createSubFormDTO);
+                await subFormRepository.AddAsync(subForm);
             }
         }
-        public SubForm ViewByID(int id)
+        public async Task<SubForm> ViewByID(int id)
         {
-            return _unitOfRepositories.subFormRepository.GetById(id);
+            return await subFormRepository.GetById(id);
         }
-        public List<SubForm> GetList(int mainformID) 
+        public async Task<List<SubForm>> GetList(int mainformID) 
         {
-            return _unitOfRepositories.subFormRepository.GetAllForms(mainformID);
+            return await subFormRepository.GetAllForms(mainformID);
         }
         public async Task Delete(int id)
         {
-            var subform = ViewByID(id);
+            var subform = await ViewByID(id);
             if(subform!= null)
             {
-                var formdata = _unitOfRepositories.formDataRepository.FetchWithSubID(subform.Id);
+                var formdata = await formDataRepository.FetchWithSubID(subform.Id);
                 if(formdata!= null)
                 {
                     foreach(var form in formdata)
                     {
-                       await _unitOfRepositories.formDataRepository.DeleteAsync(form);
+                       await formDataRepository.DeleteAsync(form);
                     }
                 }
-                await _unitOfRepositories.subFormRepository.DeleteAsync(subform);
+                await subFormRepository.DeleteAsync(subform);
             }
         }
-        public async Task Edit(SubForm subForm)
+        public async Task Edit(EditSubFormDTO subFormDTO)
         {
-           await  _unitOfRepositories.subFormRepository.UpdateAsync(subForm);
+            SubForm edittedSubForm = mapper.Map<SubForm>(subFormDTO);
+            await subFormRepository.UpdateAsync(edittedSubForm);
         }
     }
 }

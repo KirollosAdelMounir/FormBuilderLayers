@@ -1,4 +1,6 @@
 ﻿using FormBuilderDB.Models;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.ResponseRepos;
 using FormBuilderRepositoryLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -10,29 +12,31 @@ namespace FormBuilderServiceLayer.Services
 {
     public class ResponseService
     {
-        private readonly IUnitOfRepositories _unitOfRepositories;
-        public ResponseService(IUnitOfRepositories unitOfRepositories) 
+        private readonly IResponseRepository responseRepository;
+        private readonly IMainFormRepository mainFormRepository;
+        public ResponseService(IResponseRepository responseRepository, IMainFormRepository mainFormRepository) 
         {
-            _unitOfRepositories = unitOfRepositories;
+            this.responseRepository = responseRepository;
+            this.mainFormRepository = mainFormRepository;
         }
         public async Task Create(int mainFormID)
         {
-            var mainform = _unitOfRepositories.mainFormRepository.GetById(mainFormID);
+            var mainform = await mainFormRepository.GetById(mainFormID);
             if(mainform != null && mainform.IsDeleted ==false)
             {
                 Response response = new Response {MainFormId = mainFormID };
-                await _unitOfRepositories.responseRepository.AddAsync(response);
+                await responseRepository.AddAsync(response);
             }
         }
 
-        public List<Response> GetAllResponses(int formId)
+        public async Task<List<Response>> GetAllResponses(int formId)
         {
-            return _unitOfRepositories.responseRepository.AllResponsesToAForm(formId);
+            return await responseRepository.AllResponsesToAForm(formId);
         }
 
-        public Response GetResponse(int id)
+        public async Task<Response> GetResponse(int id)
         {
-            return _unitOfRepositories.responseRepository.GetById(id);
+            return await responseRepository.GetById(id);
         }
     }
 }

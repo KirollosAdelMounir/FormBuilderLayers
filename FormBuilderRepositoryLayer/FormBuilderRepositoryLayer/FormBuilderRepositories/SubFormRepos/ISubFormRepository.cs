@@ -10,6 +10,6 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.SubFormRepos
 {
     public interface ISubFormRepository : IRepository<SubForm,FormBuilderContext>
     {
-        List<SubForm> GetAllForms(int mainformID);
+        Task<List<SubForm>> GetAllForms(int mainformID);
     }
 }

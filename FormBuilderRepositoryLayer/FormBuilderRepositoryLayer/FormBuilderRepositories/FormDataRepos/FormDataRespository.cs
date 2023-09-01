@@ -14,9 +14,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos
         {
         }
 
-        public List<FormsDatum> FetchWithSubID(int subID)
+        public async Task<List<FormsDatum>> FetchWithSubID(int subID)
         {
-            return GetAll().Where(x=>x.SubFormId == subID).ToList();
+            var list = await GetAll();
+            return list.Where(x=>x.SubFormId == subID).ToList();
         }
     }
 }

@@ -31,12 +31,14 @@ namespace FormBuilderDataLayer.Repository
              await _dbContext.SaveChangesAsync();
         }
 
-        public List<T> GetAll() => _entity.ToList();
-       
-
-        public T GetById(int id)
+        public async Task<List<T>> GetAll()
         {
-            var entity = _entity.Find(id);
+            return await _entity.ToListAsync();
+        }
+       
+        public async Task<T> GetById(int id)
+        {
+            var entity = await _entity.FindAsync(id);
             if(entity!= null)
             {
                 return entity;

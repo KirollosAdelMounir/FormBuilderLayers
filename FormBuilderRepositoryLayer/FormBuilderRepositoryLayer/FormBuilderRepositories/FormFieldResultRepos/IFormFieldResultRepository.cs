@@ -10,6 +10,6 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.FormFieldResultRepo
 {
     public interface IFormFieldResultRepository: IRepository<FormFieldResult, FormBuilderContext>
     {
-        List<FormFieldResult> AllFieldsInAResponse(int responseId);
+        Task<List<FormFieldResult>> AllFieldsInAResponse(int responseId);
     }
 }

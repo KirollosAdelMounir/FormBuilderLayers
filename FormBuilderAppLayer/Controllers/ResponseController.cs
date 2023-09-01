@@ -10,31 +10,37 @@ namespace FormBuilderAppLayer.Controllers
     [ApiController]
     public class ResponseController : ControllerBase
     {
-        private IUnitOfServices unitOfServices;
+        private ResponseService responseService;
 
-        public ResponseController(IUnitOfServices unitOfServices)
+        public ResponseController(ResponseService responseService)
         {
-            this.unitOfServices = unitOfServices;
+            this.responseService = responseService;
         }
 
         //Need to use generic response
         [HttpPost("CreateResponse")]
         public async Task<IActionResult> CreateResponse(int mainFormId)
         {
-            await unitOfServices.ResponseService.Create(mainFormId);
+            await responseService.Create(mainFormId);
             return Ok("Response Created");
         }
 
         [HttpGet("GetAllResponses")]
-        public IActionResult GetAll(int mainFormId)
+        public async Task<IActionResult> GetAll(int mainFormId)
         {
-            return Ok(unitOfServices.ResponseService.GetAllResponses(mainFormId));
+            var result = await responseService.GetAllResponses(mainFormId);
+            if (result == null)
+                return BadRequest("No responses found!");
+            return Ok(result);
         }
 
         [HttpGet("GetResponse")] 
-        public IActionResult Get(int id) 
+        public async Task<IActionResult> Get(int id) 
         {
-            return Ok(unitOfServices.ResponseService.GetResponse(id));
+            var result = await responseService.GetResponse(id);
+            if (result == null)
+                return BadRequest("Response not found!");
+            return Ok(result);
         }
     }
 }

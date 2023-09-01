@@ -16,9 +16,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.SubFormRepos
             context = d;
         }
 
-        public List<SubForm> GetAllForms(int mainformID)
+        public async Task<List<SubForm>> GetAllForms(int mainformID)
         {
-            return context.SubForms.Where(x=>x.MainFormId == mainformID).ToList();
+            var list = await GetAll();
+            return list.Where(x=>x.MainFormId == mainformID).ToList();
         }
     }
 }

@@ -8,7 +8,6 @@ namespace FormBuilderDB.Models;
 public partial class SubForm
 {
     public int Id { get; set; }
-
     public string Name { get; set; } = null!;
     [ForeignKey("MainFormID")]
     public int MainFormId { get; set; }

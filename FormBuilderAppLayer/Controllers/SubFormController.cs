@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FormBuilderDB.Models;
 using FormBuilderServiceLayer.DTOs;
+using FormBuilderServiceLayer.Services;
 using FormBuilderServiceLayer.UnitOfServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,41 +12,45 @@ namespace FormBuilderAppLayer.Controllers
     [ApiController]
     public class SubFormController : ControllerBase
     {
-        private readonly IUnitOfServices _unitOfServices;
+        private readonly SubFormService subFormService;
         private readonly IMapper _mapper;
-        public SubFormController(IUnitOfServices unitOfServices , IMapper mapper)
+        public SubFormController(SubFormService subFormService, IMapper mapper)
         {
-            _unitOfServices = unitOfServices;
+            this.subFormService = subFormService;
             _mapper = mapper;
         }
         [HttpPost("CreateNewSubForm")]
         public async Task<IActionResult> CreateNewSubform(CreateSubFormDTO subformdto)
         {
-            SubForm subForm = _mapper.Map<SubForm>(subformdto);
-            await _unitOfServices.SubFormService.Create(subForm);
+            await subFormService.Create(subformdto);
             return Ok("New Sub Form Added");
         }
         [HttpGet("GetSubForm")]
-        public IActionResult GetSubForm(int id)
+        public async Task<IActionResult> GetSubForm(int id)
         {
-            return Ok(_unitOfServices.SubFormService.ViewByID(id));
+            var result = await subFormService.ViewByID(id);
+            if (result == null)
+                return BadRequest("Subform Not Found");
+            return Ok(result);
         }
         [HttpGet("GetAllSubForms")]
-        public IActionResult GetAllSubForms (int id)
+        public async Task<IActionResult> GetAllSubForms (int id)
         {
-            return Ok (_unitOfServices.SubFormService.GetList(id));
+            var result = await subFormService.GetList(id);
+            if (result == null)
+                return BadRequest("No subforms found!");
+            return Ok (result);
         }
         [HttpPut("EditSubForm")]
         public async Task<IActionResult> EditSubForm(EditSubFormDTO subformdto) 
         {
-            SubForm edittedSubForm = _mapper.Map<SubForm>(subformdto);
-            await _unitOfServices.SubFormService.Edit(edittedSubForm);
+            await subFormService.Edit(subformdto);
             return Ok("Sub Form Edited");
         }
         [HttpDelete("DeleteSubForm")]
         public async Task<IActionResult> DeleteSubForm (int ID)
         {
-            await _unitOfServices.SubFormService.Delete(ID);
+            await subFormService.Delete(ID);
             return Ok("Sub Form Deleted Successfully");
         }
     }

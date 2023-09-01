@@ -11,6 +11,7 @@ namespace FormBuilderServiceLayer.DTOs
 {
     public class EditFormDataDTO
     {
+        public int Id { get; set; }
         public int SubFormId { get; set; }
         public string FieldQuestion { get; set; } = null!;
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FormBuilderDB.Models;
 using FormBuilderServiceLayer.DTOs;
+using FormBuilderServiceLayer.Services;
 using FormBuilderServiceLayer.UnitOfServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,41 +12,44 @@ namespace FormBuilderAppLayer.Controllers
     [ApiController]
     public class MainFormController : ControllerBase
     {
-        private readonly IUnitOfServices _unitOfServices;
-        private readonly IMapper _mapper;
-        public MainFormController(IUnitOfServices unitOfServices,IMapper mapper)
+        private readonly MainFormService mainFormService;
+        private readonly SubFormService subFormService;
+        
+        public MainFormController(MainFormService mainFormService)
         {
-            _mapper = mapper;
-            _unitOfServices = unitOfServices;
+            this.mainFormService = mainFormService;
         }
         [HttpPost("CreateForm")]
-        public async Task<IActionResult> CreateForm(string name , [FromBody] CreateSubFormDTO subFormDTO)
+        public async Task<IActionResult> CreateForm(CreateFormDTO createFormDTO)
         {
-            await _unitOfServices.MainFormService.CreateForm(name);
-            SubForm subForm = _mapper.Map<SubForm>(subFormDTO);
-            await _unitOfServices.SubFormService.Create(subForm);
+            await mainFormService.CreateForm(createFormDTO);
+            /*CreateSubFormDTO subFormDTO = createFormDTO.SubForm;
+            await subFormService.Create(subFormDTO);*/
             return Ok("Form Created Successfully");
         }
         [HttpGet("ViewForm")]
-        public IActionResult GetForm(int id)
+        public async Task<IActionResult> GetForm(int id)
         {
-            return Ok(_unitOfServices.MainFormService.GetForm(id));
+            return Ok(await mainFormService.GetForm(id));
         }
         [HttpGet("ViewAllForms")]
-        public IActionResult GetAllForms()
+        public async Task<IActionResult> GetAllForms()
         {
-            return Ok(_unitOfServices.MainFormService.GetAllForms());
+            var result = await mainFormService.GetAllForms();
+            if(result == null)
+                return BadRequest("No forms");
+            return Ok(result);
         }
         [HttpPut("EditFormName")]
         public async Task <IActionResult> EditForm(int id , string name)
         {
-            await _unitOfServices.MainFormService.EditForm(id, name);
+            await mainFormService.EditForm(id, name);
             return Ok("Name Changed Successfully");
         }
         [HttpDelete("DeleteForm")]
         public async Task<IActionResult> DeleteForm (int id)
         {
-            await _unitOfServices.MainFormService.DeleteForm(id);
+            await mainFormService.DeleteForm(id);
             return Ok("Form Deleted Successfully");
         }
     }

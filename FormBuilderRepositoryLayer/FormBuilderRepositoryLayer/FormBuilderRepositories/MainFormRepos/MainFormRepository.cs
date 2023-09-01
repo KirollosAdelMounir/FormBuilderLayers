@@ -14,9 +14,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos
         {
         }
 
-        public List<MainForm> GetUndeleted()
+        public async Task<List<MainForm>> GetUndeleted()
         {
-           return GetAll().Where(x=>x.IsDeleted== false).ToList();
+            var list = await GetAll();
+            return list.Where(x=>x.IsDeleted== false).ToList();
         }
 
         public async Task IncrementResponse(MainForm mainForm)

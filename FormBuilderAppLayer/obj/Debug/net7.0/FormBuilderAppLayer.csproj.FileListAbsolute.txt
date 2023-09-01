@@ -158,3 +158,5 @@ C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\obj\Debu
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\obj\Debug\net7.0\ref\FormBuilderAppLayer.dll
 E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.dll
 E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

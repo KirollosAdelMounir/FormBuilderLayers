@@ -12,6 +12,6 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos
     {
         Task SoftDelete(MainForm mainForm);
         Task IncrementResponse(MainForm mainForm);
-        List<MainForm> GetUndeleted();
+        Task<List<MainForm>> GetUndeleted();
     }
 }

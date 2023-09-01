@@ -22,6 +22,5 @@ public partial class FormsDatum
     public FieldType Fieldtype { get; set; }
     public enum FieldType { Label, TextBox, DatePicker, TextArea, Paragraph, CheckBox, H1, H2, H3, H4, Sperator, Table, Div }
 
-
     public virtual SubForm SubForm { get; set; } = null!;
 }

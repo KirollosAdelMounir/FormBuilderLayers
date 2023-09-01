@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FormBuilderDB.Models;
 using FormBuilderServiceLayer.DTOs;
+using FormBuilderServiceLayer.Services;
 using FormBuilderServiceLayer.UnitOfServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,19 +12,17 @@ namespace FormBuilderAppLayer.Controllers
     [ApiController]
     public class FormFieldResultController : ControllerBase
     {
-        private IUnitOfServices unitOfServices;
-        private readonly IMapper mapper;
+        private FormFieldResultService formFieldResultService;
 
-        public FormFieldResultController(IUnitOfServices unitOfServices, IMapper mapper)
+        public FormFieldResultController(FormFieldResultService formFieldResultService)
         {
-            this.unitOfServices = unitOfServices;
-            this.mapper = mapper;
+            this.formFieldResultService = formFieldResultService;
         }
 
         [HttpGet("GetFieldResponse{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            FormFieldResult formFieldResult = unitOfServices.FormFieldResultService.GetFieldResponse(id);
+            FormFieldResult formFieldResult = await formFieldResultService.GetFieldResponse(id);
             if (formFieldResult != null)
             {
                 return Ok(formFieldResult);
@@ -31,9 +30,9 @@ namespace FormBuilderAppLayer.Controllers
             return BadRequest("Invalid Id");
         }
         [HttpGet("GetAllResponses")]
-        public IActionResult GetAll (int ResponseId)
+        public async Task<IActionResult> GetAll (int ResponseId)
         {
-            List<FormFieldResult> results = unitOfServices.FormFieldResultService.GetFieldResults(ResponseId);
+            List<FormFieldResult> results = await formFieldResultService.GetFieldResults(ResponseId);
             if(results != null) 
             { 
                 return Ok(results); 
@@ -44,8 +43,7 @@ namespace FormBuilderAppLayer.Controllers
         [HttpPost("CreateFormFieldResult")]
         public async Task<IActionResult> CreateFormFieldResult(CreateFormFieldResultDTO FormFieldResultDTO)
         {
-            FormFieldResult formFieldResult = mapper.Map<FormFieldResult>(FormFieldResultDTO);
-            await unitOfServices.FormFieldResultService.Create(formFieldResult);
+            await formFieldResultService.Create(FormFieldResultDTO);
             return Ok("Form Field Result Created");
         }
 

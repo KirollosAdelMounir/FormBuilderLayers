@@ -10,6 +10,6 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.ResponseRepos
 {
     public interface IResponseRepository : IRepository<Response,FormBuilderContext>
     {
-        List<Response> AllResponsesToAForm(int formId);
+        Task<List<Response>> AllResponsesToAForm(int formId);
     }
 }

@@ -1,5 +1,10 @@
-﻿using FormBuilderDB.Models;
+﻿using AutoMapper;
+using FormBuilderDB.Models;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.FormFieldResultRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.ResponseRepos;
 using FormBuilderRepositoryLayer.UnitOfWork;
+using FormBuilderServiceLayer.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,28 +15,41 @@ namespace FormBuilderServiceLayer.Services
 {
     public class FormFieldResultService
     {
-        private readonly IUnitOfRepositories _unitOfRepositories;
-        public FormFieldResultService(IUnitOfRepositories unitofRespositories)
+        private readonly IFormFieldResultRepository formFieldResultRepository;
+        private readonly IResponseRepository responseRepository;
+        private readonly IFormDataRepository formDataRepository;
+        private readonly IMapper mapper;
+        public FormFieldResultService(IFormFieldResultRepository formFieldResultRepository,
+            IResponseRepository responseRepository, IFormDataRepository formDataRepository,
+            IMapper mapper)
         {
-            _unitOfRepositories = unitofRespositories;
+            this.responseRepository = responseRepository;
+            this.formFieldResultRepository = formFieldResultRepository;
+            this.formDataRepository = formDataRepository;
+            this.mapper = mapper;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<FormFieldResult, CreateFormFieldResultDTO>().ReverseMap();
+            });
+
+            this.mapper = config.CreateMapper();
         }
-        public FormFieldResult GetFieldResponse(int fieldId) 
+        public async Task<FormFieldResult> GetFieldResponse(int fieldId) 
         {
-            return _unitOfRepositories.formFieldResultRepository.GetById(fieldId);
+            return await formFieldResultRepository.GetById(fieldId);
         }
-        public List<FormFieldResult> GetFieldResults(int responseId) 
+        public async Task<List<FormFieldResult>> GetFieldResults(int responseId) 
         {
-            return _unitOfRepositories.formFieldResultRepository.AllFieldsInAResponse(responseId);
+            return await formFieldResultRepository.AllFieldsInAResponse(responseId);
         }
-        public async Task Create(FormFieldResult formFieldResult)
+        public async Task Create(CreateFormFieldResultDTO FormFieldResultDTO)
         {
-            Response response = _unitOfRepositories.responseRepository
-                .GetById(formFieldResult.ResponseId);
-            FormsDatum formsDatum = _unitOfRepositories.formDataRepository
-                .GetById(formFieldResult.FormDataId);
+            FormFieldResult formFieldResult = mapper.Map<FormFieldResult>(FormFieldResultDTO);
+            Response response = await responseRepository.GetById(formFieldResult.ResponseId);
+            FormsDatum formsDatum = await formDataRepository.GetById(formFieldResult.FormDataId);
             if(formsDatum != null && response != null)
             {
-                await _unitOfRepositories.formFieldResultRepository.AddAsync(formFieldResult);
+                await formFieldResultRepository.AddAsync(formFieldResult);
             }
         }
     }

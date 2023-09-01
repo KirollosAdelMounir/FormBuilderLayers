@@ -1,5 +1,9 @@
-﻿using FormBuilderDB.Models;
+﻿using AutoMapper;
+using FormBuilderDB.Models;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.SubFormRepos;
 using FormBuilderRepositoryLayer.UnitOfWork;
+using FormBuilderServiceLayer.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,41 +14,55 @@ namespace FormBuilderServiceLayer.Services
 {
     public class FormDataService
     {
-        private readonly IUnitOfRepositories _unitOfRepositories;
-        public FormDataService(IUnitOfRepositories unitofRespositories) 
+        private readonly IFormDataRepository formDataRepository;
+        private readonly ISubFormRepository subFormRepository;
+        private readonly IMapper mapper;
+        public FormDataService(IFormDataRepository formDataRepository, ISubFormRepository subFormRepository,
+            IMapper mapper) 
         {
-            _unitOfRepositories = unitofRespositories;
+            this.formDataRepository = formDataRepository;
+            this.subFormRepository = subFormRepository;
+            this.mapper = mapper;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<FormsDatum, CreateFormDataDTO>().ReverseMap();
+                cfg.CreateMap<FormsDatum, EditFormDataDTO>().ReverseMap();
+            });
+
+            this.mapper = config.CreateMapper();
         }
-        public FormsDatum FormDataByID(int Id)
+        public async Task<FormsDatum> FormDataByID(int Id)
         {
-            return _unitOfRepositories.formDataRepository.GetById(Id);
+            return await formDataRepository.GetById(Id);
         }
-        public List<FormsDatum> GetAllFields(int SubFormId)
+        public async Task<List<FormsDatum>> GetAllFields(int SubFormId)
         {
-            return _unitOfRepositories.formDataRepository.FetchWithSubID(SubFormId);
+            return await formDataRepository.FetchWithSubID(SubFormId);
         }
-        public async Task CreateField(FormsDatum formsDatum)
+        public async Task CreateField(CreateFormDataDTO formDataDTO)
         {
-            SubForm subForm = _unitOfRepositories.subFormRepository.GetById(formsDatum.SubFormId);
+            SubForm subForm = await subFormRepository.GetById(formDataDTO.SubFormId);
             if(subForm != null)
             {
-                await _unitOfRepositories.formDataRepository.AddAsync(formsDatum);
+                FormsDatum formsDatum = mapper.Map<FormsDatum>(formDataDTO);
+                await formDataRepository.AddAsync(formsDatum);
             }
         }
-        public async Task UpdateField(FormsDatum formsDatum) 
+        public async Task UpdateField(EditFormDataDTO formDataDTO) 
         {
-            FormsDatum formData = FormDataByID(formsDatum.Id);
+            var formData = await FormDataByID(formDataDTO.Id);
             if(formData != null)
             {
-                await _unitOfRepositories.formDataRepository.UpdateAsync(formData);
+                formData = mapper.Map<FormsDatum>(formDataDTO);
+                await formDataRepository.UpdateAsync(formData);
             }
         }
-        public async Task DeleteField(FormsDatum formsDatum)
+        public async Task DeleteField(int id)
         {
-            FormsDatum formsDatum1 = FormDataByID(formsDatum.Id);
-            if (formsDatum1 != null)
+            FormsDatum formsDatum = await FormDataByID(id);
+            if (formsDatum != null)
             {
-                await _unitOfRepositories.formDataRepository.DeleteAsync(formsDatum1);
+                await formDataRepository.DeleteAsync(formsDatum);
             }
         }
     }

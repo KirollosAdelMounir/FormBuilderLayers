@@ -8,11 +8,12 @@ namespace FormBuilderAppLayer
     {
         public FormProfile()
         {
-            CreateMap<FormsDatum,CreateFormDataDTO>();
-            CreateMap<FormsDatum,EditFormDataDTO>();
-            CreateMap<FormFieldResult,CreateFormFieldResultDTO>();
-            CreateMap<SubForm,CreateSubFormDTO>();
-            CreateMap<SubForm,EditSubFormDTO>();
+            CreateMap<FormsDatum,CreateFormDataDTO>().ReverseMap();
+            CreateMap<FormsDatum,EditFormDataDTO>().ReverseMap();
+            CreateMap<FormFieldResult,CreateFormFieldResultDTO>().ReverseMap();
+            CreateMap<SubForm,CreateSubFormDTO>().ReverseMap();
+            CreateMap<SubForm,EditSubFormDTO>().ReverseMap();
+
         }
     }
 }

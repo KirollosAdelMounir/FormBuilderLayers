@@ -14,9 +14,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.FormFieldResultRepo
         {
         }
 
-        public List<FormFieldResult> AllFieldsInAResponse(int responseId)
+        public async Task<List<FormFieldResult>> AllFieldsInAResponse(int responseId)
         {
-            return GetAll().Where(x=>x.ResponseId == responseId).ToList();
+            var list = await GetAll();
+            return list.Where(x=>x.ResponseId == responseId).ToList();
         }
     }
 }
