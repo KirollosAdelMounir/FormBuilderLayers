@@ -20,9 +20,9 @@ namespace FormBuilderAppLayer.Controllers
             this.mainFormService = mainFormService;
         }
         [HttpPost("CreateForm")]
-        public async Task<IActionResult> CreateForm(CreateFormDTO createFormDTO)
+        public async Task<IActionResult> CreateForm(string FormName)
         {
-            await mainFormService.CreateForm(createFormDTO);
+            await mainFormService.CreateForm(FormName);
             /*CreateSubFormDTO subFormDTO = createFormDTO.SubForm;
             await subFormService.Create(subFormDTO);*/
             return Ok("Form Created Successfully");

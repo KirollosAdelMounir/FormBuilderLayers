@@ -22,9 +22,9 @@ namespace FormBuilderServiceLayer.Services
             this.mapper = mapper;
         }
 
-        public async Task CreateForm(CreateFormDTO formDTO)
+        public async Task CreateForm(string FormName)
         {
-            MainForm form = new MainForm { Name = formDTO.FormName };
+            MainForm form = new MainForm { Name = FormName };
             await mainFormRepository.AddAsync(form);
         }
 

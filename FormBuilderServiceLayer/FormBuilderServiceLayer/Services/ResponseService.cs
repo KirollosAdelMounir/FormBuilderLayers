@@ -25,6 +25,7 @@ namespace FormBuilderServiceLayer.Services
             if(mainform != null && mainform.IsDeleted ==false)
             {
                 Response response = new Response {MainFormId = mainFormID };
+                await mainFormRepository.IncrementResponse(mainform);
                 await responseRepository.AddAsync(response);
             }
         }

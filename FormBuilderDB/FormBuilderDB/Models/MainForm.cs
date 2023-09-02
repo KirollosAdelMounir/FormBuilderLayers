@@ -9,11 +9,11 @@ public partial class MainForm
 
     public string Name { get; set; } = null!;
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
 
-    public DateTime DateOfCreation { get; set; }
+    public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
-    public int NumberOfResponses { get; set; }
+    public int NumberOfResponses { get; set; } = 0;
 
 
 }

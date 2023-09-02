@@ -41,6 +41,7 @@ namespace FormBuilderDataLayer.Repository
             var entity = await _entity.FindAsync(id);
             if(entity!= null)
             {
+                _dbContext.Entry(entity).State = EntityState.Detached;
                 return entity;
             }
             return null;
@@ -48,8 +49,10 @@ namespace FormBuilderDataLayer.Repository
 
         public async Task UpdateAsync(T entity)
         {
-            _dbContext.Update(entity);
+            _dbContext.Entry(entity).State = EntityState.Modified;
             await _dbContext.SaveChangesAsync();
+            _dbContext.Entry(entity).State = EntityState.Detached;
+
         }
     }
 }
