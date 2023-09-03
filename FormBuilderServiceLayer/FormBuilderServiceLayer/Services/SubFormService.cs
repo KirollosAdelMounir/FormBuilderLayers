@@ -28,36 +28,61 @@ namespace FormBuilderServiceLayer.Services
             this.mapper = mapper;
             var config = new MapperConfiguration(cfg =>
             {
-                /*cfg.CreateMap<FormsDatum, CreateFormDataDTO>().ReverseMap();
-                cfg.CreateMap<FormsDatum, EditFormDataDTO>().ReverseMap();
-                cfg.CreateMap<FormFieldResult, CreateFormFieldResultDTO>().ReverseMap();*/
                 cfg.CreateMap<SubForm, CreateSubFormDTO>().ReverseMap();
                 cfg.CreateMap<SubForm, EditSubFormDTO>().ReverseMap();
             });
 
             this.mapper = config.CreateMapper();
         }
-        public async Task Create(CreateSubFormDTO createSubFormDTO) 
+        public async Task<GenericResponseModel<String>> Create(CreateSubFormDTO createSubFormDTO) 
         {
+            GenericResponseModel<String> responseModel = new();
             MainForm mainForm = await mainFormRepository.GetById(createSubFormDTO.MainFormId);
             if(mainForm != null && mainForm.IsDeleted ==false)
             {
                 SubForm subForm = mapper.Map<SubForm>(createSubFormDTO);
                 await subFormRepository.AddAsync(subForm);
+                responseModel.Data = "Form Created";
             }
+            return responseModel;
         }
-        public async Task<SubForm> ViewByID(int id)
+        public async Task<GenericResponseModel<SubForm>> ViewByID(int id)
         {
-            return await subFormRepository.GetById(id);
+            GenericResponseModel<SubForm> responseModel = new();
+            var response = await subFormRepository.GetById(id);
+            if (response != null)
+            {
+                responseModel.Data = response;
+            }
+            else
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Item not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            return responseModel;
         }
-        public async Task<List<SubForm>> GetList(int mainformID) 
+        public async Task<GenericResponseModel<List<SubForm>>> GetList(int mainformID) 
         {
-            return await subFormRepository.GetAllForms(mainformID);
+            GenericResponseModel<List<SubForm>> responseModel = new();
+            var response = await subFormRepository.GetAllForms(mainformID);
+            if (response != null)
+            {
+                responseModel.Data = response;
+            }
+            else
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Items not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            return responseModel;
         }
-        public async Task Delete(int id)
+        public async Task<GenericResponseModel<SubForm>> Delete(int id)
         {
-            var subform = await ViewByID(id);
-            if(subform!= null)
+            GenericResponseModel<SubForm> responseModel = new();
+            var subform = await subFormRepository.GetById(id);
+            if (subform!= null)
             {
                 var formdata = await formDataRepository.FetchWithSubID(subform.Id);
                 if(formdata!= null)
@@ -69,11 +94,34 @@ namespace FormBuilderServiceLayer.Services
                 }
                 await subFormRepository.DeleteAsync(subform);
             }
+            else
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Item not found!";
+                responseModel.ErrorList.Add(model);
+            }
+
+            return responseModel;
         }
-        public async Task Edit(EditSubFormDTO subFormDTO)
+        public async Task<GenericResponseModel<SubForm>> Edit(EditSubFormDTO subFormDTO)
         {
+            GenericResponseModel<SubForm> responseModel = new();
             SubForm edittedSubForm = mapper.Map<SubForm>(subFormDTO);
-            await subFormRepository.UpdateAsync(edittedSubForm);
+
+            var subform = await subFormRepository.GetById(subFormDTO.Id);
+            if (subform != null)
+            {
+                subform = edittedSubForm;
+                await subFormRepository.UpdateAsync(subform);
+                responseModel.Data = subform;
+            }
+            else
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Item not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            return responseModel;
         }
     }
 }

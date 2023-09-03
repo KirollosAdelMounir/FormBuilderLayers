@@ -22,35 +22,42 @@ namespace FormBuilderAppLayer.Controllers
         [HttpPost("CreateForm")]
         public async Task<IActionResult> CreateForm(string FormName)
         {
-            await mainFormService.CreateForm(FormName);
-            /*CreateSubFormDTO subFormDTO = createFormDTO.SubForm;
-            await subFormService.Create(subFormDTO);*/
-            return Ok("Form Created Successfully");
+            var res = await mainFormService.CreateForm(FormName);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpGet("ViewForm")]
         public async Task<IActionResult> GetForm(int id)
         {
-            return Ok(await mainFormService.GetForm(id));
+            var res = await mainFormService.GetForm(id);
+            if(res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpGet("ViewAllForms")]
         public async Task<IActionResult> GetAllForms()
         {
             var result = await mainFormService.GetAllForms();
-            if(result == null)
-                return BadRequest("No forms");
+            if(result.ErrorList.Any())
+                return BadRequest(result);
             return Ok(result);
         }
         [HttpPut("EditFormName")]
         public async Task <IActionResult> EditForm(int id , string name)
         {
-            await mainFormService.EditForm(id, name);
-            return Ok("Name Changed Successfully");
+            var res = await mainFormService.EditForm(id, name);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpDelete("DeleteForm")]
         public async Task<IActionResult> DeleteForm (int id)
         {
-            await mainFormService.DeleteForm(id);
-            return Ok("Form Deleted Successfully");
+            var res = await mainFormService.DeleteForm(id);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
     }
 }

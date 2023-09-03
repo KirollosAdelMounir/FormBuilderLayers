@@ -3462,24 +3462,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kokoe\\.nuget\\packages\\": {},
-    "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\hanee\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
+      "projectUniqueName": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
       "projectName": "FormBuilderDataLayer",
-      "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
-      "packagesPath": "C:\\Users\\kokoe\\.nuget\\packages\\",
-      "outputPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\obj\\",
+      "projectPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj",
+      "packagesPath": "C:\\Users\\hanee\\.nuget\\packages\\",
+      "outputPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\kokoe\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\hanee\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3487,7 +3482,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

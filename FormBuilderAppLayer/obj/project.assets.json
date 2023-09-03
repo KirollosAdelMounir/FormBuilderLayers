@@ -3778,24 +3778,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\kokoe\\.nuget\\packages\\": {},
-    "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\hanee\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderAppLayer\\FormBuilderAppLayer.csproj",
+      "projectUniqueName": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderAppLayer\\FormBuilderAppLayer.csproj",
       "projectName": "FormBuilderAppLayer",
-      "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderAppLayer\\FormBuilderAppLayer.csproj",
-      "packagesPath": "C:\\Users\\kokoe\\.nuget\\packages\\",
-      "outputPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderAppLayer\\obj\\",
+      "projectPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderAppLayer\\FormBuilderAppLayer.csproj",
+      "packagesPath": "C:\\Users\\hanee\\.nuget\\packages\\",
+      "outputPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderAppLayer\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "F:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\kokoe\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\hanee\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3803,7 +3798,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
@@ -3811,17 +3805,17 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj": {
-              "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj"
+            "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj": {
+              "projectPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDataLayer\\FormBuilderDataLayer\\FormBuilderDataLayer.csproj"
             },
-            "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj": {
-              "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj"
+            "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj": {
+              "projectPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderDB\\FormBuilderDB\\FormBuilderDB.csproj"
             },
-            "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer.csproj": {
-              "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer.csproj"
+            "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer.csproj": {
+              "projectPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer\\FormBuilderRepositoryLayer.csproj"
             },
-            "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderServiceLayer\\FormBuilderServiceLayer\\FormBuilderServiceLayer.csproj": {
-              "projectPath": "E:\\Eva Intern\\FormBuilderLayers\\FormBuilderLayers\\FormBuilderServiceLayer\\FormBuilderServiceLayer\\FormBuilderServiceLayer.csproj"
+            "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderServiceLayer\\FormBuilderServiceLayer\\FormBuilderServiceLayer.csproj": {
+              "projectPath": "C:\\Internship\\Project\\FormBuilder\\FormBuilderLayers\\FormBuilderServiceLayer\\FormBuilderServiceLayer\\FormBuilderServiceLayer.csproj"
             }
           }
         }

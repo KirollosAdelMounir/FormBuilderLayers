@@ -21,7 +21,7 @@ namespace FormBuilderAppLayer.Controllers
         [HttpGet("GetFormData{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            FormsDatum formsDatum = await formDataService.FormDataByID(id);
+            var formsDatum = await formDataService.FormDataByID(id);
             if (formsDatum != null)
             {
                 return Ok(formsDatum);
