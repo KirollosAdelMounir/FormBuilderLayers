@@ -11,7 +11,7 @@ public partial class MainForm
 
     public bool IsDeleted { get; set; } = false;
 
-    public DateTime DateOfCreation { get; set; } = DateTime.Now;
+    public DateTime DateOfCreation { get; set; } = DateTime.UtcNow;
 
     public int NumberOfResponses { get; set; } = 0;
 
