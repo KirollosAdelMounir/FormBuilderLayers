@@ -160,3 +160,8 @@ E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\
 E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.dll
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Humanizer.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Mono.TextTemplating.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\System.CodeDom.dll

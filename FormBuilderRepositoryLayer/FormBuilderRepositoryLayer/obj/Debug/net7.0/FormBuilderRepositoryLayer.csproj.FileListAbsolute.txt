@@ -49,3 +49,5 @@ C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderRepositoryLayer\F
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\obj\Debug\net7.0\refint\FormBuilderRepositoryLayer.dll
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\obj\Debug\net7.0\FormBuilderRepositoryLayer.pdb
 C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\obj\Debug\net7.0\ref\FormBuilderRepositoryLayer.dll
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\bin\Debug\net7.0\FormBuilderRepositoryLayer.runtimeconfig.json
+E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderRepositoryLayer\FormBuilderRepositoryLayer\obj\Debug\net7.0\FormBuilderRepositoryLayer.genruntimeconfig.cache
