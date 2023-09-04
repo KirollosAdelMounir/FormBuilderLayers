@@ -22,36 +22,42 @@ namespace FormBuilderAppLayer.Controllers
         [HttpPost("CreateNewSubForm")]
         public async Task<IActionResult> CreateNewSubform(CreateSubFormDTO subformdto)
         {
-            await subFormService.Create(subformdto);
-            return Ok("New Sub Form Added");
+            var res = await subFormService.Create(subformdto);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpGet("GetSubForm")]
         public async Task<IActionResult> GetSubForm(int id)
         {
-            var result = await subFormService.ViewByID(id);
-            if (result == null)
-                return BadRequest("Subform Not Found");
-            return Ok(result);
+            var res = await subFormService.ViewByID(id);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpGet("GetAllSubForms")]
-        public async Task<IActionResult> GetAllSubForms (int id)
+        public async Task<IActionResult> GetAllSubForms(int id)
         {
-            var result = await subFormService.GetList(id);
-            if (result == null)
-                return BadRequest("No subforms found!");
-            return Ok (result);
+            var res = await subFormService.GetList(id);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpPut("EditSubForm")]
-        public async Task<IActionResult> EditSubForm(EditSubFormDTO subformdto) 
+        public async Task<IActionResult> EditSubForm(EditSubFormDTO subformdto)
         {
-            await subFormService.Edit(subformdto);
-            return Ok("Sub Form Edited");
+            var res = await subFormService.Edit(subformdto);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
         [HttpDelete("DeleteSubForm")]
-        public async Task<IActionResult> DeleteSubForm (int ID)
+        public async Task<IActionResult> DeleteSubForm(int ID)
         {
-            await subFormService.Delete(ID);
-            return Ok("Sub Form Deleted Successfully");
+            var res = await subFormService.Delete(ID);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
     }
 }

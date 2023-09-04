@@ -34,23 +34,42 @@ namespace FormBuilderServiceLayer.Services
 
             this.mapper = config.CreateMapper();
         }
-        public async Task<FormFieldResult> GetFieldResponse(int fieldId) 
+        public async Task<GenericResponseModel<FormFieldResult>> GetFieldResponse(int fieldId) 
         {
-            return await formFieldResultRepository.GetById(fieldId);
+            GenericResponseModel<FormFieldResult> responseModel = new();
+            var response =  await formFieldResultRepository.GetById(fieldId);
+            if (response != null)
+            {
+                responseModel.Data = response;
+            }
+            else
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Item not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            return responseModel;
         }
-        public async Task<List<FormFieldResult>> GetFieldResults(int responseId) 
+        public async Task<GenericResponseModel<List<FormFieldResult>>> GetFieldResults(int responseId) 
         {
-            return await formFieldResultRepository.AllFieldsInAResponse(responseId);
+            GenericResponseModel<List<FormFieldResult>> responseModel = new();
+            List<FormFieldResult> response = await formFieldResultRepository
+                .AllFieldsInAResponse(responseId);
+            responseModel.Data = response;
+            return responseModel;
         }
-        public async Task Create(CreateFormFieldResultDTO FormFieldResultDTO)
+        public async Task<GenericResponseModel<String>> Create(CreateFormFieldResultDTO FormFieldResultDTO)
         {
+            GenericResponseModel<String> responseModel = new();
             FormFieldResult formFieldResult = mapper.Map<FormFieldResult>(FormFieldResultDTO);
             Response response = await responseRepository.GetById(formFieldResult.ResponseId);
             FormsDatum formsDatum = await formDataRepository.GetById(formFieldResult.FormDataId);
             if(formsDatum != null && response != null)
             {
                 await formFieldResultRepository.AddAsync(formFieldResult);
+                responseModel.Data = "Response Sent!";
             }
+            return responseModel;
         }
     }
 }

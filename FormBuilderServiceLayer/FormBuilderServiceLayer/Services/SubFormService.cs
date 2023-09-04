@@ -42,7 +42,7 @@ namespace FormBuilderServiceLayer.Services
             {
                 SubForm subForm = mapper.Map<SubForm>(createSubFormDTO);
                 await subFormRepository.AddAsync(subForm);
-                responseModel.Data = "Form Created";
+                responseModel.Data = "SubForm Created";
             }
             return responseModel;
         }

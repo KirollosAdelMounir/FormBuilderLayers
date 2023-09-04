@@ -165,3 +165,8 @@ E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\
 E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
 E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Mono.TextTemplating.dll
 E:\Eva Intern\FormBuilderLayers\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\System.CodeDom.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Humanizer.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\Mono.TextTemplating.dll
+C:\Internship\Project\FormBuilder\FormBuilderLayers\FormBuilderAppLayer\bin\Debug\net7.0\System.CodeDom.dll

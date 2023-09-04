@@ -21,45 +21,46 @@ namespace FormBuilderAppLayer.Controllers
         [HttpGet("GetFormData{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var formsDatum = await formDataService.FormDataByID(id);
-            if (formsDatum != null)
-            {
-                return Ok(formsDatum);
-            }
-            return BadRequest("Invalid Id");
+            var res = await formDataService.FormDataByID(id);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
 
         [HttpGet("GetAllFormData{subFormId}")]
         public async Task<ActionResult> GetAll(int subFormId)
         {
-            List<FormsDatum> formsData = await formDataService.GetAllFields(subFormId);
-            if(formsData != null) 
-            { 
-                return Ok(formsData); 
-            }
-            return BadRequest("Invalid SubForm Id");
+            var res = await formDataService.GetAllFields(subFormId);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
 
         [HttpPost("CreateFormData")]
         public async Task<IActionResult> CreateFormData(CreateFormDataDTO formDataDTO)
         {
-            await formDataService.CreateField(formDataDTO);
-            return Ok("Form Data Created");
+            var res = await formDataService.CreateField(formDataDTO);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
 
         [HttpPut("EditFormData")]
         public async Task<IActionResult> EditFormData(EditFormDataDTO formDataDTO)
         {
-            await formDataService.UpdateField(formDataDTO);
-
-            return Ok("Form Data Edited");
+            var res = await formDataService.UpdateField(formDataDTO);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
 
         [HttpDelete("DeleteFormData{id}")]
         public async Task<IActionResult> DeleteFormData(int id)
         {
-            await formDataService.DeleteField(id);
-            return Ok("Form Data Deleted");
+            var res = await formDataService.DeleteField(id);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
     }
 }

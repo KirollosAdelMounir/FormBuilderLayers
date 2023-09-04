@@ -17,30 +17,31 @@ namespace FormBuilderAppLayer.Controllers
             this.responseService = responseService;
         }
 
-        //Need to use generic response
         [HttpPost("CreateResponse")]
         public async Task<IActionResult> CreateResponse(int mainFormId)
         {
-            await responseService.Create(mainFormId);
-            return Ok("Response Created");
+            var res = await responseService.Create(mainFormId);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
 
         [HttpGet("GetAllResponses")]
         public async Task<IActionResult> GetAll(int mainFormId)
         {
-            var result = await responseService.GetAllResponses(mainFormId);
-            if (result == null)
-                return BadRequest("No responses found!");
-            return Ok(result);
+            var res = await responseService.GetAllResponses(mainFormId);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
 
-        [HttpGet("GetResponse")] 
-        public async Task<IActionResult> Get(int id) 
+        [HttpGet("GetResponse")]
+        public async Task<IActionResult> Get(int id)
         {
-            var result = await responseService.GetResponse(id);
-            if (result == null)
-                return BadRequest("Response not found!");
-            return Ok(result);
+            var res = await responseService.GetResponse(id);
+            if (res.ErrorList.Any())
+                return BadRequest(res);
+            return Ok(res);
         }
     }
 }
