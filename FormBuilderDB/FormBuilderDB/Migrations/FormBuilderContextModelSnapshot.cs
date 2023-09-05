@@ -22,6 +22,28 @@ namespace FormBuilderDB.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("FormBuilderDB.Models.ComboBoxFormData", b =>
+                {
+                    b.Property<int>("Value")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Value"));
+
+                    b.Property<int>("FormsDatumID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ValueName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Value");
+
+                    b.HasIndex("FormsDatumID");
+
+                    b.ToTable("ComboBoxFormData");
+                });
+
             modelBuilder.Entity("FormBuilderDB.Models.FormFieldResult", b =>
                 {
                     b.Property<int>("Id")
@@ -156,6 +178,17 @@ namespace FormBuilderDB.Migrations
                     b.HasIndex("MainFormId");
 
                     b.ToTable("SubForms");
+                });
+
+            modelBuilder.Entity("FormBuilderDB.Models.ComboBoxFormData", b =>
+                {
+                    b.HasOne("FormBuilderDB.Models.FormsDatum", "FormsDatum")
+                        .WithMany()
+                        .HasForeignKey("FormsDatumID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FormsDatum");
                 });
 
             modelBuilder.Entity("FormBuilderDB.Models.FormFieldResult", b =>

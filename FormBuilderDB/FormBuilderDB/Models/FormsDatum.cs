@@ -20,7 +20,7 @@ public partial class FormsDatum
     public int Order { get; set; }
 
     public FieldType Fieldtype { get; set; }
-    public enum FieldType { Label, TextBox, DatePicker, TextArea, Paragraph, CheckBox, H1, H2, H3, H4, Sperator, Table, Div }
 
     public virtual SubForm SubForm { get; set; } = null!;
 }
+    public enum FieldType:int { Label =1 , TextBox , DatePicker , TextArea, Paragraph, CheckBox, H1, H2, H3, H4, Sperator, Table, Div , ComboBox}

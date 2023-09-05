@@ -25,7 +25,7 @@ public partial class FormBuilderContext : DbContext
 
     public virtual DbSet<SubForm> SubForms { get; set; }
 
-    
+    public virtual DbSet<ComboBoxFormData> ComboBoxFormData { get; set; }
 
    
 }
