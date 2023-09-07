@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FormBuilderDB.Models;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.SubFormRepos;
 using FormBuilderRepositoryLayer.UnitOfWork;
 using FormBuilderServiceLayer.DTOs;
@@ -16,12 +17,14 @@ namespace FormBuilderServiceLayer.Services
     {
         private readonly IFormDataRepository formDataRepository;
         private readonly ISubFormRepository subFormRepository;
+        private readonly IMainFormRepository mainFormRepository;
         private readonly IMapper mapper;
         public FormDataService(IFormDataRepository formDataRepository, ISubFormRepository subFormRepository,
-            IMapper mapper) 
+            IMainFormRepository mainFormRepository, IMapper mapper) 
         {
             this.formDataRepository = formDataRepository;
             this.subFormRepository = subFormRepository;
+            this.mainFormRepository = mainFormRepository;
             this.mapper = mapper;
             var config = new MapperConfiguration(cfg =>
             {
@@ -60,9 +63,29 @@ namespace FormBuilderServiceLayer.Services
             SubForm subForm = await subFormRepository.GetById(formDataDTO.SubFormId);
             if (subForm != null)
             {
-                FormsDatum formsDatum = mapper.Map<FormsDatum>(formDataDTO);
-                await formDataRepository.AddAsync(formsDatum);
-                responseModel.Data = "Form Data Created";
+                MainForm mainForm = await mainFormRepository.GetById(subForm.MainFormId);
+                if (mainForm.NumberOfResponses == 0)
+                {
+                    List<FormsDatum> forms = await formDataRepository.FetchWithSubID(formDataDTO.SubFormId);
+                    FormsDatum forma = forms.FirstOrDefault(x => x.Order == formDataDTO.Order);
+                    if (forma != null)
+                    {
+                        responseModel.Data = "Cannot have 2 forms with the same order " +
+                            " because they will overlap!";
+                    }
+                    else
+                    {
+                        FormsDatum formsDatum = mapper.Map<FormsDatum>(formDataDTO);
+                        await formDataRepository.AddAsync(formsDatum);
+                        responseModel.Data = "Form Data Created";
+                    }
+                }
+                else
+                {
+                    ErrorListModel model = new ErrorListModel();
+                    model.Message = "Cannot add new questions after responses have been received!";
+                    responseModel.ErrorList.Add(model);
+                }
             }
             else
             {
@@ -78,9 +101,41 @@ namespace FormBuilderServiceLayer.Services
             var formData = await formDataRepository.GetById(formDataDTO.Id);
             if (formData != null)
             {
-                formData = mapper.Map<FormsDatum>(formDataDTO);
-                await formDataRepository.UpdateAsync(formData);
-                responseModel.Data = formData;
+                SubForm subForm = await subFormRepository.GetById(formDataDTO.SubFormId);
+                if (subForm != null)
+                {
+                    MainForm mainForm = await mainFormRepository.GetById(subForm.MainFormId);
+                    if (mainForm.NumberOfResponses == 0)
+                    {
+                        List<FormsDatum> forms = await formDataRepository.FetchWithSubID(formDataDTO.SubFormId);
+                        FormsDatum forma = forms.FirstOrDefault(x => x.Order == formDataDTO.Order);
+                        if (forma != null)
+                        {
+                            ErrorListModel model = new ErrorListModel();
+                            model.Message = "Cannot have 2 forms with the same order" +
+                                " because they will overlap!";
+                            responseModel.ErrorList.Add(model);
+                        }
+                        else
+                        {
+                            FormsDatum formsDatum = mapper.Map<FormsDatum>(formDataDTO);
+                            await formDataRepository.UpdateAsync(formsDatum);
+                            responseModel.Data = formsDatum;
+                        }
+                    }
+                    else
+                    {
+                        ErrorListModel model = new ErrorListModel();
+                        model.Message = "Cannot edit after responses have been received!";
+                        responseModel.ErrorList.Add(model);
+                    }
+                }
+                else
+                {
+                    ErrorListModel model = new ErrorListModel();
+                    model.Message = "Invalid SubformId!";
+                    responseModel.ErrorList.Add(model);
+                }
             }
             else
             {

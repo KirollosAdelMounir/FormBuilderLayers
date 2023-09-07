@@ -74,15 +74,21 @@ namespace FormBuilderServiceLayer.Services
             return responseModel;
         }
 
-        public async Task<GenericResponseModel<MainForm>> EditForm(int id,string name)
+        public async Task<GenericResponseModel<MainForm>> EditForm(int id, string name)
         {
             GenericResponseModel<MainForm> responseModel = new();
             var mainform = await mainFormRepository.GetById(id);
-            if (mainform != null && mainform.IsDeleted==false)
+            if (mainform != null && mainform.IsDeleted == false && mainform.NumberOfResponses == 0)
             {
                 mainform.Name = name;
                 await mainFormRepository.UpdateAsync(mainform);
                 responseModel.Data = mainform;
+            }
+            else if (mainform != null && mainform.IsDeleted == false && mainform.NumberOfResponses > 0)
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Cannot edit form after responses have been received!";
+                responseModel.ErrorList.Add(model);
             }
             else
             {

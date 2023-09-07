@@ -34,15 +34,43 @@ namespace FormBuilderServiceLayer.Services
 
             this.mapper = config.CreateMapper();
         }
-        public async Task<GenericResponseModel<String>> Create(CreateSubFormDTO createSubFormDTO) 
+        public async Task<GenericResponseModel<String>> Create(CreateSubFormDTO createSubFormDTO)
         {
             GenericResponseModel<String> responseModel = new();
             MainForm mainForm = await mainFormRepository.GetById(createSubFormDTO.MainFormId);
-            if(mainForm != null && mainForm.IsDeleted ==false)
+            if (mainForm == null)
             {
-                SubForm subForm = mapper.Map<SubForm>(createSubFormDTO);
-                await subFormRepository.AddAsync(subForm);
-                responseModel.Data = "SubForm Created";
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Form not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            else if (mainForm != null && mainForm.IsDeleted == true)
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Form not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            else if (mainForm != null && mainForm.IsDeleted == false && mainForm.NumberOfResponses > 0)
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Cannot add new subform after responses have been received!";
+                responseModel.ErrorList.Add(model);
+            }
+            else if (mainForm != null && mainForm.IsDeleted == false && mainForm.NumberOfResponses == 0)
+            {
+                List<SubForm> subForms = await subFormRepository.GetAllForms(createSubFormDTO.MainFormId);
+                SubForm sub = subForms.FirstOrDefault(x => x.Order == createSubFormDTO.Order);
+                if (sub != null)
+                {
+                    responseModel.Data = "Cannot have 2 subforms with the same order because they" +
+                        "will overlap!";
+                }
+                else
+                {
+                    SubForm subForm = mapper.Map<SubForm>(createSubFormDTO);
+                    await subFormRepository.AddAsync(subForm);
+                    responseModel.Data = "SubForm Created";
+                }
             }
             return responseModel;
         }
@@ -107,18 +135,45 @@ namespace FormBuilderServiceLayer.Services
         {
             GenericResponseModel<SubForm> responseModel = new();
             SubForm edittedSubForm = mapper.Map<SubForm>(subFormDTO);
-
             var subform = await subFormRepository.GetById(subFormDTO.Id);
             if (subform != null)
             {
-                subform = edittedSubForm;
-                await subFormRepository.UpdateAsync(subform);
-                responseModel.Data = subform;
+                MainForm mainForm = await mainFormRepository.GetById(subform.MainFormId);
+                if (mainForm != null && mainForm.IsDeleted == false && mainForm.NumberOfResponses == 0)
+                {
+                    List<SubForm> subForms = await subFormRepository.GetAllForms(edittedSubForm.MainFormId);
+                    SubForm sub = subForms.FirstOrDefault(x => x.Order == subFormDTO.Order);
+                    if (sub != null)
+                    {
+                        ErrorListModel model = new ErrorListModel();
+                        model.Message = "Cannot have 2 subforms with the same order because they" +
+                            "will overlap!";
+                        responseModel.ErrorList.Add(model);
+                    }
+                    else
+                    {
+                        subform = edittedSubForm;
+                        await subFormRepository.UpdateAsync(subform);
+                        responseModel.Data = subform;
+                    }
+                }
+                else if (mainForm != null && mainForm.IsDeleted == false && mainForm.NumberOfResponses > 0)
+                {
+                    ErrorListModel model = new ErrorListModel();
+                    model.Message = "Cannot edit subform after responses have been received!";
+                    responseModel.ErrorList.Add(model);
+                }
+                else
+                {
+                    ErrorListModel model = new ErrorListModel();
+                    model.Message = "Main form not found!";
+                    responseModel.ErrorList.Add(model);
+                }
             }
             else
             {
                 ErrorListModel model = new ErrorListModel();
-                model.Message = "Item not found!";
+                model.Message = "Subform not found!";
                 responseModel.ErrorList.Add(model);
             }
             return responseModel;
