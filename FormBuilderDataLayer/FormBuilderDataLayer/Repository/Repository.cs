@@ -35,7 +35,23 @@ namespace FormBuilderDataLayer.Repository
         {
             return await _entity.ToListAsync();
         }
-       
+
+        public List<T> GetAll<T>(List<T> dataList, Func<T, bool> predicate)
+        {
+            List<T> result = new List<T>();
+           
+            foreach (var item in dataList )
+            {
+
+                if (predicate(item))
+                {
+                    result.Add(item);
+                }
+                
+            }
+            return result;
+        }
+
         public async Task<T> GetById(int id)
         {
             var entity = await _entity.FindAsync(id);

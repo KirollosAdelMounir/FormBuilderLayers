@@ -13,6 +13,7 @@ namespace FormBuilderDataLayer.Repository
         Task AddAsync(T entity);
         Task DeleteAsync(T entity);
         Task UpdateAsync(T entity);
+        List<T> GetAll<T>(List<T> dataList, Func<T, bool> predicate);
 
     }
 }
