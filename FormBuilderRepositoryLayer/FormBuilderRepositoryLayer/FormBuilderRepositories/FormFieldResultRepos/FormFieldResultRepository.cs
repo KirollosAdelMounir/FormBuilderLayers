@@ -1,5 +1,6 @@
 ﻿using FormBuilderDataLayer.Repository;
 using FormBuilderDB.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.FormFieldResultRepo
 
         public async Task<List<FormFieldResult>> AllFieldsInAResponse(int responseId)
         {
-            var list = await GetAll();
-            return list.Where(x=>x.ResponseId == responseId).ToList();
+            /*var list = await GetAll();
+            return list.Where(x=>x.ResponseId == responseId).ToList();*/
+            var list = await _dbContext.FormFieldResults.Where(x => x.ResponseId == responseId).ToListAsync();
+            return list;
         }
     }
 }

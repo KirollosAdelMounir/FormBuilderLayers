@@ -1,5 +1,6 @@
 ﻿using FormBuilderDataLayer.Repository;
 using FormBuilderDB.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos
 
         public async Task<List<MainForm>> GetUndeleted()
         {
-            var list = await GetAll();
-            return list.Where(x=>x.IsDeleted== false).ToList();
+            //var list = await GetAll();
+            //var list2 = await GetAll(x => x.IsDeleted == false);
+            var list = await _dbContext.MainForms.Where(x => x.IsDeleted == false).ToListAsync();
+            return list;
         }
 
         public async Task IncrementResponse(MainForm mainForm)

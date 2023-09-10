@@ -1,5 +1,6 @@
 ﻿using FormBuilderDataLayer.Repository;
 using FormBuilderDB.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,8 +19,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.SubFormRepos
 
         public async Task<List<SubForm>> GetAllForms(int mainformID)
         {
-            var list = await GetAll();
-            return list.Where(x=>x.MainFormId == mainformID).ToList();
+            /*var list = await GetAll();
+            return list.Where(x=>x.MainFormId == mainformID).ToList();*/
+            var list = await _dbContext.SubForms.Where(x => x.MainFormId == mainformID).ToListAsync();
+            return list;
         }
     }
 }

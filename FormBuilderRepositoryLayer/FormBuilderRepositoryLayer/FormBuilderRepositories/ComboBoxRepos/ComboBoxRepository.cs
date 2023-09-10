@@ -1,5 +1,6 @@
 ﻿using FormBuilderDataLayer.Repository;
 using FormBuilderDB.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,10 @@ namespace FormBuilderRepositoryLayer.FormBuilderRepositories.ComboBoxRepos
 
         public async Task<List<ComboBoxFormData>> ListOfComboItems(int FormDataID)
         {
-            var list = await GetAll();
-            return list.Where(x=>x.FormsDatumID == FormDataID).ToList();
+            /*var list = await GetAll();
+            return list.Where(x=>x.FormsDatumID == FormDataID).ToList();*/
+            var list = await _dbContext.ComboBoxFormData.Where(x => x.FormsDatumID == FormDataID).ToListAsync();
+            return list;
         }
     }
 }

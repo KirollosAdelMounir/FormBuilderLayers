@@ -10,7 +10,7 @@ namespace FormBuilderDataLayer.Repository
 {
     public class Repository<T , D> : IRepository<T,D> where T : class where D : DbContext
     {
-        private readonly DbContext _dbContext;
+        protected readonly D _dbContext;
         private DbSet<T> _entity;
         
         public Repository(D d) 
