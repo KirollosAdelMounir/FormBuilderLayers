@@ -1,6 +1,7 @@
 
 using FormBuilderDataLayer.Repository;
 using FormBuilderDB.Models;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.ComboBoxRepos;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.FormFieldResultRepos;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos;
@@ -42,6 +43,7 @@ namespace FormBuilderAppLayer
             builder.Services.AddScoped<IMainFormRepository,MainFormRepository>();
             builder.Services.AddScoped<IResponseRepository,ResponseRepository>();
             builder.Services.AddScoped<ISubFormRepository, SubFormRepository>();
+            builder.Services.AddScoped<IComboBoxRepository , ComboBoxRepository>();
             //Adding Services from Service Layer
             builder.Services.AddScoped<FormDataService>();
             builder.Services.AddScoped<FormFieldResultService>();

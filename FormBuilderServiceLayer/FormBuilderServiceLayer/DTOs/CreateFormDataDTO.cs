@@ -20,6 +20,6 @@ namespace FormBuilderServiceLayer.DTOs
         public int Order { get; set; }
         [Range(1,14)]
         public int FieldType { get; set; }
-/*        public enum FieldType { Label, TextBox, DatePicker, TextArea, Paragraph, CheckBox, H1, H2, H3, H4, Sperator, Table, Div }
-*/    }
+        public List<string>? ComboBoxItems { get; set; }
+    }
 }

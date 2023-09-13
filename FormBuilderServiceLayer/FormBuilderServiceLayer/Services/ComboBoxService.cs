@@ -60,9 +60,18 @@ namespace FormBuilderServiceLayer.Services
             FormsDatum formsDatum = await formRepository.GetById(createComboBox.FormsDatumID);
             if(formsDatum != null)
             {
-                ComboBoxFormData comboBox = mapper.Map<ComboBoxFormData>(createComboBox);
+                /*ComboBoxFormData comboBox = mapper.Map<ComboBoxFormData>(createComboBox);
                 await _repository.AddAsync(comboBox);
-                responseModel.Data = "ComboBoxField Created!";
+                responseModel.Data = "ComboBoxField Created!";*/
+                foreach(var item in createComboBox.ValueNames)
+                {
+                    ComboBoxFormData comboBox = new ComboBoxFormData()
+                    {
+                        FormsDatumID = formsDatum.Id,
+                        ValueName = item
+                    };
+                    await _repository.AddAsync(comboBox);
+                }
             }
             else
             {

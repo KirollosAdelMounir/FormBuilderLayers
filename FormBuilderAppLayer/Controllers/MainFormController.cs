@@ -20,9 +20,9 @@ namespace FormBuilderAppLayer.Controllers
             this.mainFormService = mainFormService;
         }
         [HttpPost("CreateForm")]
-        public async Task<IActionResult> CreateForm(string FormName)
+        public async Task<IActionResult> CreateForm(CreateMainFormDTO formDTO)
         {
-            var res = await mainFormService.CreateForm(FormName);
+            var res = await mainFormService.CreateForm(formDTO);
             if (res.ErrorList.Any())
                 return BadRequest(res);
             return Ok(res);

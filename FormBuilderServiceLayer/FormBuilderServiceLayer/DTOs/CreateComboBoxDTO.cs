@@ -9,7 +9,7 @@ namespace FormBuilderServiceLayer.DTOs
 {
     public class CreateComboBoxDTO
     {
-        public string ValueName { get; set; }
+        public List<string> ValueNames { get; set; }
         public int FormsDatumID { get; set; }
     }
 }
