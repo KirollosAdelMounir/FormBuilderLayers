@@ -3,6 +3,7 @@ using FormBuilderServiceLayer.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using FormBuilderServiceLayer.UnitOfServices;
+using FormBuilderServiceLayer.DTOs;
 
 namespace FormBuilderAppLayer.Controllers
 {
@@ -18,9 +19,9 @@ namespace FormBuilderAppLayer.Controllers
         }
 
         [HttpPost("CreateResponse")]
-        public async Task<IActionResult> CreateResponse(int mainFormId)
+        public async Task<IActionResult> CreateResponse(CreateResponseDTO createResponse)
         {
-            var res = await responseService.Create(mainFormId);
+            var res = await responseService.Create(createResponse);
             if (res.ErrorList.Any())
                 return BadRequest(res);
             return Ok(res);

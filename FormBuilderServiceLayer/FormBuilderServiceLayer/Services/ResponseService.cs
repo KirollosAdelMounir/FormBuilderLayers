@@ -1,7 +1,9 @@
 ﻿using FormBuilderDB.Models;
+using FormBuilderRepositoryLayer.FormBuilderRepositories.FormDataRepos;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.MainFormRepos;
 using FormBuilderRepositoryLayer.FormBuilderRepositories.ResponseRepos;
 using FormBuilderRepositoryLayer.UnitOfWork;
+using FormBuilderServiceLayer.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,13 @@ namespace FormBuilderServiceLayer.Services
     {
         private readonly IResponseRepository responseRepository;
         private readonly IMainFormRepository mainFormRepository;
-        public ResponseService(IResponseRepository responseRepository, IMainFormRepository mainFormRepository) 
+        private readonly IFormDataRepository formDataRepository;
+        public ResponseService(IResponseRepository responseRepository, 
+            IMainFormRepository mainFormRepository, IFormDataRepository formDataRepository) 
         {
             this.responseRepository = responseRepository;
             this.mainFormRepository = mainFormRepository;
+            this.formDataRepository = formDataRepository;
         }
         public async Task<GenericResponseModel<String>> Create(int mainFormID)
         {
@@ -54,6 +59,45 @@ namespace FormBuilderServiceLayer.Services
             if (response != null)
             {
                 responseModel.Data = response;
+            }
+            else
+            {
+                ErrorListModel model = new ErrorListModel();
+                model.Message = "Item not found!";
+                responseModel.ErrorList.Add(model);
+            }
+            return responseModel;
+        }
+
+        public async Task<GenericResponseModel<String>> Create(CreateResponseDTO responseDTO)
+        {
+            GenericResponseModel<String> responseModel = new();
+            var mainform = await mainFormRepository.GetById(responseDTO.MainFormID);
+            if (mainform != null && mainform.IsDeleted == false)
+            {
+                Response response = new Response { MainFormId = responseDTO.MainFormID };
+                await mainFormRepository.IncrementResponse(mainform);
+                await responseRepository.AddAsync(response);
+                foreach(var item in responseDTO.fieldResultDTOs)
+                {
+                    var formData = await formDataRepository.GetById(item.FormDataID);
+                    if(formData != null)
+                    {
+                        FormFieldResult fieldResult = new FormFieldResult()
+                        {
+                            FormDataId = item.FormDataID,
+                            ResponseId = item.FormDataID,
+                            Response = item.Response
+                        };
+                    }
+                    else
+                    {
+                        ErrorListModel model = new ErrorListModel();
+                        model.Message = "Form Data not found!";
+                        responseModel.ErrorList.Add(model);
+                    }
+                }
+                responseModel.Data = "Response Created";
             }
             else
             {
