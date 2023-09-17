@@ -32,14 +32,14 @@ namespace FormBuilderServiceLayer.Services
             this.comboBoxRepository = comboBoxRepository;
         }
 
-        public async Task<GenericResponseModel<String>> CreateForm(string FormName)
+        /*public async Task<GenericResponseModel<String>> CreateForm(string FormName)
         {
             GenericResponseModel<String> responseModel = new();
             MainForm form = new MainForm { Name = FormName };
             await mainFormRepository.AddAsync(form);
             responseModel.Data = "Form Created";
             return responseModel;
-        }
+        }*/
 
         public async Task<GenericResponseModel<MainForm>> GetForm(int id)
         {
@@ -84,14 +84,46 @@ namespace FormBuilderServiceLayer.Services
             return responseModel;
         }
 
-        public async Task<GenericResponseModel<MainForm>> EditForm(int id, string name)
+        public async Task<GenericResponseModel<MainForm>> EditForm(int id, EditMainFormDTO formDTO)
         {
             GenericResponseModel<MainForm> responseModel = new();
             var mainform = await mainFormRepository.GetById(id);
             if (mainform != null && mainform.IsDeleted == false && mainform.NumberOfResponses == 0)
             {
-                mainform.Name = name;
+                mainform.Name = formDTO.Name;
                 await mainFormRepository.UpdateAsync(mainform);
+                foreach(var subform in formDTO.Subforms)
+                {
+                    var sub = await subFormRepository.GetById(subform.Id);
+                    if(sub!= null)
+                    {
+                        sub = mapper.Map<SubForm>(subform);
+                        await subFormRepository.UpdateAsync(sub);
+                        foreach (var formData in subform.FormData)
+                        {
+                            var formData1 = await formdatarepository.GetById(formData.Id);
+                            if (formData1 != null)
+                            {
+                                formData1 = mapper.Map<FormsDatum>(formData);
+                                await formdatarepository.UpdateAsync(formData1);
+                            }
+                            else
+                            {
+                                ErrorListModel model = new ErrorListModel();
+                                model.Message = "FormData with ID: " + formData.Id + " not found!";
+                                responseModel.ErrorList.Add(model);
+                                return responseModel;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ErrorListModel model = new ErrorListModel();
+                        model.Message = "Subform with ID: "+ subform.Id +" not found!";
+                        responseModel.ErrorList.Add(model);
+                        return responseModel;
+                    }
+                }
                 responseModel.Data = mainform;
             }
             else if (mainform != null && mainform.IsDeleted == false && mainform.NumberOfResponses > 0)
@@ -103,14 +135,14 @@ namespace FormBuilderServiceLayer.Services
             else
             {
                 ErrorListModel model = new ErrorListModel();
-                model.Message = "Item not found!";
+                model.Message = "Form not found!";
                 responseModel.ErrorList.Add(model);
             }
             return responseModel;
         }
-        public async Task<GenericResponseModel<String>> CreateForm(CreateMainFormDTO createMainFormDTO)
+        public async Task<GenericResponseModel<MainForm>> CreateForm(CreateMainFormDTO createMainFormDTO)
         {
-            GenericResponseModel<String> responseModel = new();
+            GenericResponseModel<MainForm> responseModel = new();
             MainForm form = new MainForm { Name = createMainFormDTO.Name };
             await mainFormRepository.AddAsync(form);
             List<int> orders = new List<int>();
@@ -119,8 +151,11 @@ namespace FormBuilderServiceLayer.Services
                 int order = orders.FirstOrDefault(x=> x==item.Order);
                 if(order!= null && order!=0)
                 {
-                    responseModel.Data = "Cannot have 2 subforms with the same order because they " +
+                    ErrorListModel model = new ErrorListModel();
+                    model.Message = "Cannot have 2 subforms with the same order because they " +
                         "will overlap!";
+                    responseModel.ErrorList.Add(model);
+                    responseModel.Data = form;
                     return responseModel;
                 }
                 else
@@ -140,8 +175,11 @@ namespace FormBuilderServiceLayer.Services
                         int formDataOrder = formDataOrders.FirstOrDefault(x => x == formdataitem.Order);
                         if (formDataOrder != null && formDataOrder != 0)
                         {
-                            responseModel.Data = "Cannot have 2 items with the same order because they " +
+                            ErrorListModel model = new ErrorListModel();
+                            model.Message = "Cannot have form data with the same order because they " +
                                 "will overlap!";
+                            responseModel.ErrorList.Add(model);
+                            responseModel.Data = form;
                             return responseModel;
                         }
                         else
@@ -174,7 +212,7 @@ namespace FormBuilderServiceLayer.Services
                     }
                 } 
             }
-            responseModel.Data = "Form Created";
+            responseModel.Data = form;
             return responseModel;
         }
     }

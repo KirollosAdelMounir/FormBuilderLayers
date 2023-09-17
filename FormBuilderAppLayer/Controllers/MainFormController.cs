@@ -43,10 +43,10 @@ namespace FormBuilderAppLayer.Controllers
                 return BadRequest(result);
             return Ok(result);
         }
-        [HttpPut("EditFormName")]
-        public async Task <IActionResult> EditForm(int id , string name)
+        [HttpPut("EditForm")]
+        public async Task <IActionResult> EditForm(int id , EditMainFormDTO mainFormDTO)
         {
-            var res = await mainFormService.EditForm(id, name);
+            var res = await mainFormService.EditForm(id, mainFormDTO);
             if (res.ErrorList.Any())
                 return BadRequest(res);
             return Ok(res);
