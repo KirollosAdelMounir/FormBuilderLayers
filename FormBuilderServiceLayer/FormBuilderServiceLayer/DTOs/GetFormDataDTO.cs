@@ -9,17 +9,21 @@ using System.Threading.Tasks;
 
 namespace FormBuilderServiceLayer.DTOs
 {
-    public class CreateFormDataDTO
+    public class GetFormDataDTO
     {
+        public int Id { get; set; }
         public int SubFormId { get; set; }
-        public string FieldQuestion { get; set; } = null!;
+
+        public string FieldQuestion { get; set; }
+
         public bool IsMandatory { get; set; }
-        [Range(1, 12)]
         public int Size { get; set; }
-        [Range(1, int.MaxValue, ErrorMessage = "Only numbers greater than or equal 0 allowed")]
         public int Order { get; set; }
-        [Range(1,14)]
-        public int FieldType { get; set; }
+
+        public int Fieldtype { get; set; }
+
         public List<string>? ComboBoxItems { get; set; }
+
+
     }
 }

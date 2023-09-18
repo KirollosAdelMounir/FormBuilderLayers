@@ -30,6 +30,13 @@ namespace FormBuilderServiceLayer.Services
             this.subFormRepository = subFormRepository;
             this.formdatarepository = formDataRepository;
             this.comboBoxRepository = comboBoxRepository;
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<SubForm, GetSubFormDTO>().ReverseMap();
+                cfg.CreateMap<MainForm, GetMainFormDTO>().ReverseMap();
+                cfg.CreateMap<FormsDatum, GetFormDataDTO>().ReverseMap();
+            });
+            this.mapper = config.CreateMapper();
         }
 
         /*public async Task<GenericResponseModel<String>> CreateForm(string FormName)
@@ -41,13 +48,49 @@ namespace FormBuilderServiceLayer.Services
             return responseModel;
         }*/
 
-        public async Task<GenericResponseModel<MainForm>> GetForm(int id)
+        public async Task<GenericResponseModel<GetMainFormDTO>> GetForm(int id)
         {
-            GenericResponseModel<MainForm> responseModel = new();
-            MainForm response =  await mainFormRepository.GetById(id);
-            if (response != null && response.IsDeleted==false)
+            GenericResponseModel<GetMainFormDTO> responseModel = new();
+            MainForm mainForm =  await mainFormRepository.GetById(id);
+            if (mainForm != null && mainForm.IsDeleted==false)
             {
-                responseModel.Data = response;
+                List<SubForm> subForms = await subFormRepository.GetAllForms(id);
+                List<GetSubFormDTO> subFormDTOs = new List<GetSubFormDTO>();
+                if(subForms.Count > 0)
+                {
+                    List<GetFormDataDTO> formsDataDTO = new List<GetFormDataDTO>();
+                    foreach(SubForm subForm in subForms)
+                    {
+                        List<FormsDatum> formsDatumList = await formdatarepository.FetchWithSubID(subForm.Id);
+                        if(formsDatumList.Count > 0) 
+                        {
+                            foreach(FormsDatum formsDatum in formsDatumList)
+                            {
+                                GetFormDataDTO getFormDataDTO = mapper.Map<GetFormDataDTO>(formsDatum);
+                                if (formsDatum.Fieldtype.ToString().Equals("ComboBox"))
+                                {
+                                    List<ComboBoxFormData> comboBox = await comboBoxRepository.ListOfComboItems(formsDatum.Id);
+                                    if(comboBox.Count > 0)
+                                    {
+                                        List<string> comboBoxString = new List<string>();
+                                        foreach (ComboBoxFormData comboBoxFormData in comboBox)
+                                        {
+                                            comboBoxString.Add(comboBoxFormData.ValueName);
+                                        }
+                                        getFormDataDTO.ComboBoxItems = comboBoxString;
+                                    }
+                                }
+                                formsDataDTO.Add(getFormDataDTO);
+                            }
+                        }
+                        GetSubFormDTO subFormDTO = mapper.Map<GetSubFormDTO>(subForm);
+                        subFormDTO.formData = formsDataDTO;
+                        subFormDTOs.Add(subFormDTO);
+                    }
+                }
+                GetMainFormDTO mainFormDTO = mapper.Map<GetMainFormDTO>(mainForm);
+                mainFormDTO.Subforms = subFormDTOs;
+                responseModel.Data = mainFormDTO;
             }
             else
             {
@@ -149,7 +192,7 @@ namespace FormBuilderServiceLayer.Services
             foreach (var item in createMainFormDTO.Subforms)
             {
                 int order = orders.FirstOrDefault(x=> x==item.Order);
-                if(order!= null && order!=0)
+                if(order!= null && order<0)
                 {
                     ErrorListModel model = new ErrorListModel();
                     model.Message = "Cannot have 2 subforms with the same order because they " +
@@ -173,7 +216,7 @@ namespace FormBuilderServiceLayer.Services
                     foreach (var formdataitem in item.FormData)
                     {
                         int formDataOrder = formDataOrders.FirstOrDefault(x => x == formdataitem.Order);
-                        if (formDataOrder != null && formDataOrder != 0)
+                        if (formDataOrder != null && formDataOrder < 0)
                         {
                             ErrorListModel model = new ErrorListModel();
                             model.Message = "Cannot have form data with the same order because they " +

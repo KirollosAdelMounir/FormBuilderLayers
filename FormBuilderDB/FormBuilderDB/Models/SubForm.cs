@@ -13,7 +13,7 @@ public partial class SubForm
     public int MainFormId { get; set; }
     [Range(1,12)]
     public int Size { get; set; }
-    [Range(0, int.MaxValue, ErrorMessage = "Only positive number allowed")]
+    [Range(0, int.MaxValue, ErrorMessage = "Only numbers greater than or equal 0 allowed")]
     public int Order { get; set; }
     public virtual MainForm MainForm { get; set; } = null!;
 }
