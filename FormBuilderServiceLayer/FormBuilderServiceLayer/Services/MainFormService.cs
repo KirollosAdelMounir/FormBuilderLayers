@@ -35,6 +35,8 @@ namespace FormBuilderServiceLayer.Services
                 cfg.CreateMap<SubForm, GetSubFormDTO>().ReverseMap();
                 cfg.CreateMap<MainForm, GetMainFormDTO>().ReverseMap();
                 cfg.CreateMap<FormsDatum, GetFormDataDTO>().ReverseMap();
+                cfg.CreateMap<SubForm, EditSubFormDTO>().ReverseMap();
+                cfg.CreateMap<FormsDatum, EditFormDataDTO>().ReverseMap();
             });
             this.mapper = config.CreateMapper();
         }
@@ -149,6 +151,22 @@ namespace FormBuilderServiceLayer.Services
                             {
                                 formData1 = mapper.Map<FormsDatum>(formData);
                                 await formdatarepository.UpdateAsync(formData1);
+                                if(formData.FieldType==14 && formData.ComboBoxItems != null)
+                                {
+                                    List<ComboBoxFormData> comboBoxFormDatas =
+                                        await comboBoxRepository.ListOfComboItems(formData.Id);
+                                    foreach(var comboData in formData.ComboBoxItems)
+                                    {
+                                        ComboBoxFormData comboBoxFormData = 
+                                            comboBoxFormDatas.FirstOrDefault(c => c.FormsDatumID==formData.Id
+                                            && c.ValueName==comboData);
+                                        if(comboBoxFormData==null)
+                                        {
+                                            await comboBoxRepository.AddAsync(new ComboBoxFormData()
+                                            { ValueName = comboData, FormsDatumID = formData.Id });
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
